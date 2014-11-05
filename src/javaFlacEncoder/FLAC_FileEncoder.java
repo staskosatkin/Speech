@@ -130,7 +130,6 @@ public class FLAC_FileEncoder {
       }
       if( status == Status.OK) {
         flac.setOutputStream(fout);
-        
         try {
           flac.openFLACStream();
         }catch(IOException e) {
