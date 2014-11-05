@@ -63,6 +63,9 @@ public class FLAC_FileEncoder {
     /** No errors found. */
     OK
   }
+  AudioInputStream sin = null;
+  FLACFileOutputStream fout = null;
+  
   FLACEncoder flac = null;
   StreamConfiguration sc = null;
   EncodingConfiguration ec = null;
@@ -122,7 +125,6 @@ public class FLAC_FileEncoder {
     if( !result)
       status = Status.INTERNAL_ERROR;
     else {
-      FLACFileOutputStream fout = null;
       try{
         fout = new FLACFileOutputStream(outFile.getPath());
       } catch(IOException e) {
@@ -156,7 +158,6 @@ public class FLAC_FileEncoder {
     this.outFile = outputFile;
     //take file and initial configuration.
     //open file
-    AudioInputStream sin = null;
     AudioFormat format = null;
     try {
       sin = AudioSystem.getAudioInputStream(inputFile);
@@ -186,6 +187,11 @@ public class FLAC_FileEncoder {
         status = Status.UNSUPPORTED_SAMPLE_SIZE;
       else
         throw e;
+    } finally {
+        try {
+            if (sin != null) sin.close();
+            if (fout != null) fout.close();
+       } catch (IOException e) {}
     }
     return status;
   }
