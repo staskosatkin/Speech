@@ -6,11 +6,6 @@ import IOAdapter.IOutput;
 
 public final class File {
 
-    /**
-     * @param filename
-     * @param content
-     * @throws Exception 
-     */
     public static void writeLine(String filename, String content) throws Exception {
         IOutput adapter = Factory.output("file", filename);
         adapter.writeLine(content);

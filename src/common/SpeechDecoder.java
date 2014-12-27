@@ -1,5 +1,9 @@
 package common;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -49,11 +53,30 @@ public class SpeechDecoder {
             }
             in.close();
 
-            Console.write(bos.toString("UTF-8"));
+            String output = bos.toString("UTF-8");
+
+            Console.writeLine(SpeechDecoder.processResponse(output));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    protected static String processResponse(String input) {
+
+        String jsStr = input.substring(input.indexOf("\n"));
+
+        JsonParser parser = new JsonParser();
+
+        JsonObject jsonObject = parser.parse(jsStr).getAsJsonObject();
+
+        return jsonObject.getAsJsonArray("result")
+                .get(0)
+                .getAsJsonObject().getAsJsonArray("alternative")
+                .get(0)
+                .getAsJsonObject()
+                .getAsJsonPrimitive("transcript")
+                .toString();
     }
 }
