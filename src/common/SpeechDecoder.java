@@ -29,10 +29,10 @@ public class SpeechDecoder {
                 FileInputStream fis = new FileInputStream(file);
                 try {
                     
-                    int lenght;
+                    int length;
                     byte[] buffer = new byte[4096];
-                    while(-1 != (lenght = fis.read(buffer))) {
-                        cos.write(buffer, 0, lenght);
+                    while(-1 != (length = fis.read(buffer))) {
+                        cos.write(buffer, 0, length);
                     }
                 } finally {
                     fis.close();
