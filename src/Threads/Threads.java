@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 public class Threads {
     
-    
     private volatile static HashMap<String, String> vars = new HashMap<String, String>();
     private volatile static ArrayList<Thread> array = new ArrayList<Thread>();
     

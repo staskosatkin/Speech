@@ -37,7 +37,8 @@ class File implements IOutput {
         try {
             writer = new BufferedWriter(new FileWriter(this.filename));
             try {
-                writer.write(str);
+                writer.append(str);
+                writer.newLine();
             } catch (IOException e) {
             } finally {
                 try {

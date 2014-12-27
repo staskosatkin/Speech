@@ -4,7 +4,7 @@ import java.io.FileReader;
 
 public class Factory {
 
-    final public static IOutput output(String name, String param) throws Exception {
+    public static IOutput output(String name, String param) throws Exception {
         if (name.equals("stdout")) {
             return new PrintStream(System.out);
         }
@@ -14,11 +14,11 @@ public class Factory {
         throw new Exception("Unknown adapter");
     }
     
-    final public static IOutput output(String name) throws Exception {
+    public static IOutput output(String name) throws Exception {
         return Factory.output(name, null);
     }
     
-    final public static IInput input(String name, String param) throws Exception {
+    public static IInput input(String name, String param) throws Exception {
         if(name.equals("stdin")) {
             return new InputStream(System.in);
         }
@@ -28,11 +28,11 @@ public class Factory {
         throw new Exception("Unknown adapter");
     }
     
-    final public static IInput input(String name) throws Exception {
+    public static IInput input(String name) throws Exception {
         return Factory.input(name, null);
     }
     
-    final public static IInputAudio inputAduio(String name) {
+    public static IInputAudio inputAudio(String name) {
         if(name.equals("microphone")) {
             return new Microphone();
         }

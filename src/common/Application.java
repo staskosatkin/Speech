@@ -1,27 +1,6 @@
 package common;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javaFlacEncoder.FLAC_FileEncoder;
-
-import javax.sound.sampled.AudioFileFormat;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.Line;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.Mixer;
-import javax.sound.sampled.TargetDataLine;
-
 import Threads.Threads;
 
 public class Application {
@@ -43,13 +22,30 @@ public class Application {
             Audio.microphoneStart(Application.tempDir + Application.filename + ".wav");
         }
         if(command.equals("break")) {
-            Audio.microphoneStop();
+            try {
+                Console.writeLine(" --- Record completed ---");
+                Audio.microphoneStop();
+                
+                Console.writeLine(" --- Convert ---");
+                Convertor.wav2flac(Application.tempDir + Application.filename + ".wav", Application.tempDir + Application.filename + ".flac");
+                
+                Console.writeLine(" --- Translate ---");
+                SpeechDecoder.request(Application.tempDir + Application.filename + ".flac");
+                
+                Console.writeLine(" --- Completed ---");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            
         }
         if(command.equals("exit")) {
             Console.stop();
         }
         if(command.equals("convert")) {
             Convertor.wav2flac(Application.tempDir + Application.filename + ".wav", Application.tempDir + Application.filename + ".flac");
+        }
+        if(command.equals("translate")) {
+            SpeechDecoder.request(Application.tempDir + Application.filename + ".flac");
         }
     }
 }

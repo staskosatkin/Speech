@@ -1,6 +1,5 @@
 package IOAdapter;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import javax.sound.sampled.AudioFileFormat;
@@ -22,7 +21,7 @@ class Microphone implements IInputAudio {
         try {
             Console.writeLine(" --- Record have started ---");
             
-            AudioFormat format = new AudioFormat(22000.0f, 16, 1, true, true);
+            AudioFormat format = new AudioFormat(44100.0f, 16, 1, true, true);
             TargetDataLine microphone = AudioSystem.getTargetDataLine(format);
             
             microphone.open(format);

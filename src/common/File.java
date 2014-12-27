@@ -21,5 +21,10 @@ public final class File {
         return adapter.readLine();
     }
     
+    public static void write(String filename, String line) throws Exception {
+        IOutput adapter = Factory.output("file", filename);
+        adapter.write(line);
+    }
+    
 
 }
