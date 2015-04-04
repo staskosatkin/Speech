@@ -2,8 +2,8 @@ package IOAdapter;
 
 public interface IOutput {
 
-	public void writeLine(String str);
+	void writeLine(String str);
 	
-	public void write(String str);
+	void write(String str);
 	
 }
