@@ -25,20 +25,17 @@ public class Console {
     }
     
     public static void run() {
-        Console.threadName = Threads.add(new Runnable() {
-            @Override
-            public void run() {
-                while (!Thread.interrupted()) {
-                    String command;
-                    try {
-                        command = Console.readLine();
-                        if (command.length() != 0) {
-                            Application.commandControl(command);
-                            Threads.varSet("command", command);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+        Console.threadName = Threads.add(() -> {
+            while (!Thread.interrupted()) {
+                String command;
+                try {
+                    command = Console.readLine();
+                    if (command.length() != 0) {
+                        Application.commandControl(command);
+                        Threads.varSet("command", command);
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
