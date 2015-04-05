@@ -30,17 +30,14 @@ class Microphone implements IInputAudio {
             this.audioInputStream = new AudioInputStream(microphone);
             final java.io.File fileOut = new java.io.File(filename);
             
-            this.threadName = Threads.add(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Console.writeLine("Thread started");
-                        if(AudioSystem.isFileTypeSupported(AudioFileFormat.Type.WAVE, audioInputStream)) {
-                            AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE, fileOut);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+            this.threadName = Threads.add(() -> {
+                try {
+                    Console.writeLine("Thread started");
+                    if(AudioSystem.isFileTypeSupported(AudioFileFormat.Type.WAVE, audioInputStream)) {
+                        AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE, fileOut);
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
             Threads.start(this.threadName);
